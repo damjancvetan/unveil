@@ -62,7 +62,7 @@ img {
 }
 ```
 ```javascript
-$("img").unveil(200, function() {
+$("img").unveil({threshold: 200}, function() {
   $(this).load(function() {
     this.style.opacity = 1;
   });
