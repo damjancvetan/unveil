@@ -35,13 +35,17 @@ $(document).ready(function() {
 
 
 
-###Threshold
+###Options
 By default, images are only loaded and "unveiled" when the user scrolls to them and they became visible on the screen.
 If you want your images to load earlier than that, lets say 200px before they appear on the screen, you just have to:
 ```javascript
-$("img").unveil(200);
+$("img").unveil({threshold: 200});
 ```
 
+By default scroll event is appended to window. You can specify you own DOM object for scroll event. This is useful if you have for example DIV element with scrollable content.
+```javascript
+$("img").unveil(element: $("div#image-list"));
+```
 
 ###Callback
 As a second parameter you can also specify a callback function that will fire after an image as been "unveiled".
