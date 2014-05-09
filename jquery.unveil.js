@@ -10,9 +10,15 @@
 
 ;(function($) {
 
-  $.fn.unveil = function(threshold, callback) {
+  $.fn.unveil = function(options, callback) {
+
+    if(typeof options === "object"){
+      var threshold = options.threshold || 0;
+      var element = options.element;
+    }
 
     var $w = $(window),
+        $el = element || $w,
         th = threshold || 0,
         retina = window.devicePixelRatio > 1,
         attrib = retina? "data-src-retina" : "data-src",
@@ -29,12 +35,13 @@
     });
 
     function unveil() {
+
       var inview = images.filter(function() {
         var $e = $(this);
         if ($e.is(":hidden")) return;
 
-        var wt = $w.scrollTop(),
-            wb = wt + $w.height(),
+        var wt = $el.scrollTop(),
+            wb = wt + $el.height(),
             et = $e.offset().top,
             eb = et + $e.height();
 
@@ -45,7 +52,7 @@
       images = images.not(loaded);
     }
 
-    $w.scroll(unveil);
+    $el.scroll(unveil);
     $w.resize(unveil);
 
     unveil();
