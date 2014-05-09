@@ -42,9 +42,14 @@ If you want your images to load earlier than that, lets say 200px before they ap
 $("img").unveil({threshold: 200});
 ```
 
-By default scroll event is appended to window. You can specify you own DOM object for scroll event. This is useful if you have for example DIV element with scrollable content.
+By default scroll event is appended to window. You can specify you own DOM object for scroll event. This is useful if you have for example DIV element with scrollable content:
 ```javascript
-$("img").unveil(element: $("div#image-list"));
+$("img").unveil({element: $("div#image-list")});
+```
+
+All together:
+```javascript
+$("img").unveil({element: $("div#image-list"), threshold: 200});
 ```
 
 ###Callback
