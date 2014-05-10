@@ -12,9 +12,19 @@
 
   $.fn.unveil = function(options, callback) {
 
+    var scrollDir;
+
     if(typeof options === "object"){
       var threshold = options.threshold || 0;
       var element = options.element;
+      if (options.scroll){
+        scrollDir = options.scroll;
+      }
+    }
+
+    // Check for valid vaues
+    if(!scrollDir || !( scrollDir == 'vertical' || scrollDir == 'horizontal') ){
+      scrollDir = 'vertical';
     }
 
     var $w = $(window),
@@ -37,8 +47,18 @@
     function unveil() {
 
       var inview = images.filter(function() {
+        
         var $e = $(this);
-        if ($e.is(":hidden")) return;
+        if ($e.is(":hidden")){ return };        
+
+        if(scrollDir == 'horizontal'){
+          var wl = $el.scrollLeft(),
+              wr = wl + $el.width(),
+              el = $e.offset().left,
+              er = el + $e.width();
+
+          return er >= wl - th && el <= wr + th;
+        }
 
         var wt = $el.scrollTop(),
             wb = wt + $el.height(),
@@ -46,6 +66,7 @@
             eb = et + $e.height();
 
         return eb >= wt - th && et <= wb + th;
+      
       });
 
       loaded = inview.trigger("unveil");
